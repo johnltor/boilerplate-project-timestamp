@@ -27,13 +27,6 @@ app.get("/api/hello", function (req, res) {
 app.get('/api/:date', (req, res, next) => {
   const { date } = req.params;
 
-  if (date === '') {
-    return res.json({
-      unix: Date.now(),
-      utc: new Date().toUTCString()
-    });
-  }
-
   let unix;
   let utc;
 
@@ -54,6 +47,13 @@ app.get('/api/:date', (req, res, next) => {
   res.json({
     unix,
     utc
+  });
+});
+
+app.get('/api', (req, res, next) => {
+  res.json({
+    unix: Date.now(),
+    utc: new Date().toUTCString()
   });
 });
 
