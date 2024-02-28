@@ -27,8 +27,18 @@ app.get("/api/hello", function (req, res) {
 app.get('/api/:date', (req, res, next) => {
   const { date } = req.params;
 
-  const unix = new Date(date).getTime();
-  const utc = new Date(date).toUTCString();
+  let unix;
+  let utc;
+
+  const unixPattern = /^\d+$/;
+
+  if (unixPattern.test(date)) {
+    unix = Number(date);
+    utc = new Date(unix).toUTCString();
+  } else {
+    unix = new Date(date).getTime();
+    utc = new Date(date).toUTCString();
+  }
 
   res.json({
     unix,
